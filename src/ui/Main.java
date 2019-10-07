@@ -16,7 +16,10 @@ public class Main {
 		bst1.add(36, "Nicolás");
 		
 		System.out.println(bst1);
-
+		
+		bst1.leftRotate(7);
+		
+		System.out.println(bst1);
 	}
 
 }
