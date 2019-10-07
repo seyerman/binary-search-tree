@@ -4,10 +4,19 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 
 	private BSTNode<K, T> root;
 
+	/**
+	 * Instantiates a new BST and makes it root node null.
+	 */
 	public BinarySearchTree() {
 		root = null;
 	}
-
+	
+	
+	/**
+	 * Searches for an element given its key.
+	 * @param k The key to be searched.
+	 * @return An element that has a key matching the one given in parameter. Null if couldn't find such element in the BST.
+	 */
 	public T search(K k) {
 
 		BSTNode<K, T> current = root;
@@ -147,6 +156,13 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		return toString(root, "", true);
 	}
 	
+	/**
+	 * Returns a String representation of this BST by navigating it recursively. Method taken from stackoverflow.com Credit to its respective authors.
+	 * @param node Current node
+	 * @param indent Total representation as of now.
+	 * @param last True if the node is the last one to be used.
+	 * @return
+	 */
 	private String toString(BSTNode<K, T> node, String indent, boolean last){
 		String treeString = "";
 	    treeString = indent + "+- " + node.getKey()+"("+node.getInfo()+")"+"\n";

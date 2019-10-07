@@ -16,7 +16,8 @@ public class Main {
 		bst1.add(36, "Nicolás");
 		
 		System.out.println(bst1);
-
+		System.out.println();
+		System.out.println(bst1);
 	}
 
 }
