@@ -12,7 +12,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 
 		BSTNode<K, T> current = root;
 
-		while (!current.getKey().equals(k) && current != null) {
+		while (current != null && !current.getKey().equals(k)) {
 
 			if (k.compareTo(current.getKey()) < 0) {
 				current = current.getLeft();
@@ -87,5 +87,31 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 			}
 			return current.getInfo();
 		}
+	}
+	
+	public String toString() {
+		return toString(root, "", true);
+	}
+	
+	private String toString(BSTNode<K, T> node, String indent, boolean last){
+		String treeString = "";
+	    treeString = indent + "+- " + node.getKey()+"("+node.getInfo()+")"+"\n";
+	    indent += last ? "   " : "|  ";
+
+	    if(node.getLeft()!=null) {
+	    	treeString += toString(node.getLeft(), indent, node.getRight()==null);
+	    }
+	    
+	    if(node.getRight()!=null) {
+	    	treeString += toString(node.getRight(), indent, true);
+	    }
+	    
+	    return treeString;
+	    
+	}	
+	
+	//pre: node!=null and node.right!=null
+	protected void leftRotate(BSTNode<K, T> node) {
+		
 	}
 }
