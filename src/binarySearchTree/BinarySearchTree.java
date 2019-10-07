@@ -26,13 +26,22 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 			return null;
 	}
 	
-	//Pre: k!=null and t!=null
+
+	/**
+	 * Adds a node in the BST, as long as it has not been added yet.
+	 * @param k The key of the element to be added.
+	 * @param t The element itself to be added.
+	 * @return True if the node could be added, False otherwise.
+	 */
 	public boolean add(K k, T t) {
+		//If element has already been added.
 		if(search(k) != null) {
 			return false;
 		}
 		
+		//Element not added yet. Node created.
 		BSTNode<K, T> tA = new BSTNode<>(k,t);
+		//Case this BST has no nodes
 		if(root == null) {
 			root = tA;
 			return true;
@@ -64,7 +73,10 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		
 	}
 
-	
+	/**
+	 * Returns the maximum element in this Binary Search Tree
+	 * @return the maximum element in this BST, found by going down in right nodes until finding a leaf node.
+	 */
 	public T max() {
 		if(root == null) {
 			return null;
@@ -77,6 +89,10 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		}
 	}
 	
+	/**
+	 * Returns the minimum element in this Binary Search Tree
+	 * @return the minimum element in this BST, found by going down in left nodes until finding a leaf node.
+	 */
 	public T min() {
 		if(root == null) {
 			return null;
@@ -86,6 +102,44 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 				current = current.getLeft();
 			}
 			return current.getInfo();
+		}
+	}
+
+	/**
+	 * Rotates a given node to the left, provided it has a right child.
+	 * @param x Given node to be rotated. Must have a right child.
+	 */
+	protected void rotateLeft(BSTNode<K, T> x) {
+		BSTNode<K, T> y = x.getRight();
+		BSTNode<K, T> tb = y.getLeft();
+		//X left does not change
+		//Y Right does not change
+		y.setLeft(x);
+		x.setParent(y);
+		tb.setParent(x);
+		x.setRight(tb);
+		
+		if(x == root) {
+			root = y;
+		}
+	}
+	
+	/**
+	 * Rotates a given node to the left, provided it has a right child.
+	 * @param x Given node to be rotated. Must have a right child.
+	 */
+	protected void rotateRight(BSTNode<K, T> x) {
+		BSTNode<K, T> y = x.getLeft();
+		BSTNode<K, T> tc = y.getRight();
+		//X Right does not change
+		//Y Left does not change
+		y.setRight(x);
+		x.setParent(y);
+		tc.setParent(x);
+		x.setLeft(tc);
+		
+		if(x == root) {
+			root = y;
 		}
 	}
 }
