@@ -19,6 +19,15 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	 */
 	public T search(K k) {
 
+		BSTNode<K, T> node = searchNode(k);
+		if (node!= null)
+			return node.getInfo();
+		else
+			return null;
+	}
+	
+	public BSTNode<K, T> searchNode(K k) {
+
 		BSTNode<K, T> current = root;
 
 		while (current != null && !current.getKey().equals(k)) {
@@ -29,10 +38,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 				current = current.getRight();
 			}
 		}
-		if (current != null)
-			return current.getInfo();
-		else
-			return null;
+		return current;
 	}
 	
 
@@ -120,17 +126,29 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	 */
 	protected void rotateLeft(BSTNode<K, T> x) {
 		BSTNode<K, T> y = x.getRight();
-		BSTNode<K, T> tb = y.getLeft();
-		//X left does not change
-		//Y Right does not change
+		x.setRight(y.getLeft());
+		if(y.getLeft()!=null) {
+			y.getLeft().setParent(x);
+		}
+		y.setParent(x.getParent());
+		if(x.getParent()==null) {
+			root = y;
+		}else if(x==x.getParent().getLeft()) {
+			x.getParent().setLeft(y);
+		}else {
+			x.getParent().setRight(y);
+		}
 		y.setLeft(x);
 		x.setParent(y);
-		tb.setParent(x);
-		x.setRight(tb);
-		
-		if(x == root) {
-			root = y;
-		}
+	}
+	
+	/**
+	 * Public call for rotateLeft method. Rotates an element in the given key to the left. It should'nt be modified.
+	 * @param key The given key
+	 */
+	public final void leftRotate(K key) {
+		BSTNode<K, T> node = searchNode(key);
+		rotateLeft(node);
 	}
 	
 	/**
@@ -178,6 +196,6 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	    
 	    return treeString;
 	    
-	}	
+	}
 
 }
