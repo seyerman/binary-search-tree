@@ -45,4 +45,8 @@ public class BSTNode<K extends Comparable<K>,T> {
 	public void setParent(BSTNode<K, T> p) {
 		parent = p;
 	}
+	
+	public String toString() {
+		return getKey() + "(" + getInfo() + ")";
+	}
 }

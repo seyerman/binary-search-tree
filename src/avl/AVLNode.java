@@ -18,4 +18,8 @@ public class AVLNode<K extends Comparable<K>, T> extends BSTNode<K,T>{
 	public void setBalanceFactor(int bf) {
 		balanceFactor = bf;
 	}
+	
+	public String toString() {
+		return "[" + balanceFactor + "]" + getKey() + "(" + getInfo() + ")";
+	}
 }

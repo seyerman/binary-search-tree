@@ -2,7 +2,7 @@ package ui;
 
 import binarySearchTree.BinarySearchTree;
 
-public class Main {
+public class MainBST {
 
 	public static void main(String[] args) {
 		BinarySearchTree<Integer, String> bst1 = new BinarySearchTree<Integer, String>();

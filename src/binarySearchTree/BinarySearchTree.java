@@ -52,7 +52,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		boolean added = false;
 		
 		while(!added){
-			if(k.compareTo(current.getKey())<0) {
+			if(tA.getKey().compareTo(current.getKey())<0) {
 				if(current.getLeft() != null) {
 					current = current.getLeft();
 				}else {
@@ -105,11 +105,13 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	
 	private String toString(BSTNode<K, T> node, String indent, boolean last){
 		String treeString = "";
-	    treeString = indent + "+- " + node.getKey()+"("+node.getInfo()+")"+"\n";
+	    treeString = indent + "+- " + node +"\n";
 	    indent += last ? "   " : "|  ";
 
 	    if(node.getLeft()!=null) {
 	    	treeString += toString(node.getLeft(), indent, node.getRight()==null);
+	    }else if(node.getRight()!=null) {
+	    	treeString += indent+"|\n";
 	    }
 	    
 	    if(node.getRight()!=null) {
