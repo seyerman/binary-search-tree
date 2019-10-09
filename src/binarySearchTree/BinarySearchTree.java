@@ -143,4 +143,28 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		BSTNode<K, T> node = searchNode(key);
 		leftRotate(node);
 	}
+	
+	//pre: node!=null and node.right!=null
+	protected void rightRotate(BSTNode<K, T> x) {
+		BSTNode<K, T> y = x.getLeft();
+		x.setLeft(y.getRight());
+		if(y.getRight()!=null) {
+			y.getRight().setParent(x);
+		}
+		y.setParent(x.getParent());
+		if(x.getParent()==null) {
+			root = y;
+		}else if(x==x.getParent().getLeft()) {
+			x.getParent().setLeft(y);
+		}else {
+			x.getParent().setRight(y);
+		}
+		y.setRight(x);
+		x.setParent(y);
+	}
+	
+	public void righRotate(K key) {
+		BSTNode<K, T> node = searchNode(key);
+		rightRotate(node);
+	}
 }
