@@ -2,7 +2,7 @@ package binarySearchTree;
 
 public class BinarySearchTree<K extends Comparable<K>, T> {
 
-	private BSTNode<K, T> root;
+	protected BSTNode<K, T> root;
 
 	public BinarySearchTree() {
 		root = null;
@@ -34,11 +34,15 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	
 	//Pre: k!=null and t!=null
 	public boolean add(K k, T t) {
-		if(search(k) != null) {
-			return false;
-		}
-		
 		BSTNode<K, T> tA = new BSTNode<>(k,t);
+		return addNode(tA);
+	}
+	
+	protected boolean addNode(BSTNode<K, T> tA) {
+		if(search(tA.getKey()) != null) {
+			return false;
+		}		
+		
 		if(root == null) {
 			root = tA;
 			return true;
