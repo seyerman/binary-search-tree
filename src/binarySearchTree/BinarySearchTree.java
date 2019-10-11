@@ -1,7 +1,14 @@
 package binarySearchTree;
 
+/**
+ * A data structure based in trees, in which each node may have a left or a right child node. These nodes share a property, in which the left child node is always lesser or equal in a certain order than the node, and the node is always lesser than its right child node. With this property, searching and certain special operations such as maxNode and minNode are always done in, given the worst case, O(n)
+ * @author Jhon Edward Mora - Universidad ICESI - A00355710
+ * @param <K> A Comparable object that defines the order property of the nodes.
+ * @param <T> The objects to be stored in this data structure.
+ */
 public class BinarySearchTree<K extends Comparable<K>, T> {
 
+	/**First node in the tree, also known as the "root" node*/
 	private BSTNode<K, T> root;
 
 	/**
@@ -146,7 +153,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	 * Public call for rotateLeft method. Rotates an element in the given key to the left. It should'nt be modified.
 	 * @param key The given key
 	 */
-	public final void leftRotate(K key) {
+	public final void rotateLeft(K key) {
 		BSTNode<K, T> node = searchNode(key);
 		rotateLeft(node);
 	}
@@ -157,18 +164,31 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	 */
 	protected void rotateRight(BSTNode<K, T> x) {
 		BSTNode<K, T> y = x.getLeft();
-		BSTNode<K, T> tc = y.getRight();
-		//X Right does not change
-		//Y Left does not change
+		x.setLeft(y.getRight());
+		if(y.getRight()!=null) {
+			y.getRight().setParent(x);
+		}
+		y.setParent(x.getParent());
+		if(x.getParent()==null) {
+			root = y;
+		}else if(x==x.getParent().getRight()) {
+			x.getParent().setRight(y);
+		}else {
+			x.getParent().setLeft(y);
+		}
 		y.setRight(x);
 		x.setParent(y);
-		tc.setParent(x);
-		x.setLeft(tc);
-		
-		if(x == root) {
-			root = y;
-		}
 	}
+	
+	/**
+	 * Public call for rotateRight method. Rotates the element in the given key to the right. It should'nt be modified.
+	 * @param key The given key to be rotated right
+	 */
+	public final void rotateRight(K key) {
+		BSTNode<K, T> n = searchNode(key);
+		rotateRight(n);
+	}
+	
 	
 	public String toString() {
 		return toString(root, "", true);

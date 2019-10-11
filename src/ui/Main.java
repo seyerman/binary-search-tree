@@ -17,9 +17,11 @@ public class Main {
 		
 		System.out.println(bst1);
 		
-		System.out.println();
+		bst1.rotateLeft(7);
 		
-		bst1.leftRotate(7);
+		System.out.println(bst1);
+		
+		bst1.rotateRight(15);
 		
 		System.out.println(bst1);
 	}
