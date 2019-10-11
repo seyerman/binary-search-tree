@@ -33,6 +33,11 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 			return null;
 	}
 	
+	/**
+	 * Searches for a node given its key
+	 * @param k The key of the node given.
+	 * @return A node that matches the key given, or null if the key doesn't exist.
+	 */
 	public BSTNode<K, T> searchNode(K k) {
 
 		BSTNode<K, T> current = root;
@@ -56,43 +61,48 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	 * @return True if the node could be added, False otherwise.
 	 */
 	public boolean add(K k, T t) {
-		//If element has already been added.
-		if(search(k) != null) {
+		if(search(k) == null) {
+			BSTNode<K, T> ta = new BSTNode<>(k, t);
+			if(root == null) {
+				root = ta;
+			}else {
+				addNode(ta, root);
+			}
+			return true;
+		}else {
 			return false;
 		}
-		
-		//Element not added yet. Node created.
-		BSTNode<K, T> tA = new BSTNode<>(k,t);
-		//Case this BST has no nodes
-		if(root == null) {
-			root = tA;
-			return true;
-		}
-		
-		BSTNode<K, T> current = root;
-		boolean added = false;
-		
-		while(!added){
-			if(k.compareTo(current.getKey())<0) {
-				if(current.getLeft() != null) {
-					current = current.getLeft();
-				}else {
-					current.setLeft(tA);
-					tA.setParent(current);
-					added = true;
-				}
-			}else {
-				if(current.getRight() != null){
-					current = current.getRight();
-				}else {
-					current.setRight(tA);
-					tA.setParent(current);
-					added = true;
-				}
+	}
+	
+	/**
+	 * Adds a node in the tree, provided that it's key hasn't been added yet.
+	 * @param ta The given node to be added in the tree.
+	 */
+	protected void addNode(BSTNode<K, T> ta, BSTNode<K, T> current) {
+		//Left case:
+		if(ta.getKey().compareTo(current.getKey())<=0) {
+			//Case Current has left child
+			if(current.getLeft() != null) {
+				addNode(ta, current.getLeft());
+			}
+			//Case current has no left child. Added ta in left.
+			else {
+				current.setLeft(ta);
+				ta.setParent(current);
 			}
 		}
-		return added;
-		
+		//Right case:
+		else {
+			//Case current has right child
+			if(current.getRight() != null) {
+				addNode(ta, current.getRight());
+			}
+			//Case current has no right child, added ta in left.
+			else {
+				current.setRight(ta);
+				ta.setParent(current);
+			}
+		}
 	}
 
 	/**
@@ -150,10 +160,11 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	}
 	
 	/**
-	 * Public call for rotateLeft method. Rotates an element in the given key to the left. It should'nt be modified.
-	 * @param key The given key
+	 * Public call for the rotate left method. Rotates a node in the given key to the left.<br>
+	 * <b>PRE:</b> Given key must have already been added in the tree, and has a right child.
+	 * @param key The given key of the node to be rotated.
 	 */
-	public final void rotateLeft(K key) {
+	public void rotateLeft(K key) {
 		BSTNode<K, T> node = searchNode(key);
 		rotateLeft(node);
 	}
@@ -181,10 +192,11 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	}
 	
 	/**
-	 * Public call for rotateRight method. Rotates the element in the given key to the right. It should'nt be modified.
-	 * @param key The given key to be rotated right
+	 * Public call for the rotate right method. Rotates a node in the given key to the right.<br>
+	 * <b>PRE:</b> Given key must have already been added in the tree, and has a left child.
+	 * @param key The given key of the node to be rotated.
 	 */
-	public final void rotateRight(K key) {
+	public void rotateRight(K key) {
 		BSTNode<K, T> n = searchNode(key);
 		rotateRight(n);
 	}
@@ -199,15 +211,17 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	 * @param node Current node
 	 * @param indent Total representation as of now.
 	 * @param last True if the node is the last one to be used.
-	 * @return
+	 * @return A formatted String representing a tree.
 	 */
 	private String toString(BSTNode<K, T> node, String indent, boolean last){
 		String treeString = "";
-	    treeString = indent + "+- " + node.getKey()+"("+node.getInfo()+")"+"\n";
+	    treeString = indent + "+- " + node +"\n";
 	    indent += last ? "   " : "|  ";
 
 	    if(node.getLeft()!=null) {
 	    	treeString += toString(node.getLeft(), indent, node.getRight()==null);
+	    }else if(node.getRight()!=null) {
+	    	treeString += indent+"|\n";
 	    }
 	    
 	    if(node.getRight()!=null) {
