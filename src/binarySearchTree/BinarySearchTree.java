@@ -2,7 +2,6 @@ package binarySearchTree;
 
 /**
  * A data structure based in trees, in which each node may have a left or a right child node. These nodes share a property, in which the left child node is always lesser or equal in a certain order than the node, and the node is always lesser than its right child node. With this property, searching and certain special operations such as maxNode and minNode are always done in, given the worst case, O(n)
- * @author Jhon Edward Mora - Universidad ICESI - A00355710
  * @param <K> A Comparable object that defines the order property of the nodes.
  * @param <T> The objects to be stored in this data structure.
  */
@@ -55,54 +54,55 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 	
 
 	/**
-	 * Adds a node in the BST, as long as it has not been added yet.
+	 * Attempts to add a node in the Binary Search Tree, by checking if the element has already been added in the tree and then adding it, if appliable.
 	 * @param k The key of the element to be added.
 	 * @param t The element itself to be added.
 	 * @return True if the node could be added, False otherwise.
 	 */
 	public boolean add(K k, T t) {
-		if(search(k) == null) {
-			BSTNode<K, T> ta = new BSTNode<>(k, t);
-			if(root == null) {
-				root = ta;
-			}else {
-				addNode(ta, root);
-			}
-			return true;
-		}else {
-			return false;
-		}
+		BSTNode<K, T> tA = new BSTNode<>(k,t);
+		return addNode(tA);
 	}
+	
 	
 	/**
 	 * Adds a node in the tree, provided that it's key hasn't been added yet.
 	 * @param ta The given node to be added in the tree.
 	 */
-	protected void addNode(BSTNode<K, T> ta, BSTNode<K, T> current) {
-		//Left case:
-		if(ta.getKey().compareTo(current.getKey())<=0) {
-			//Case Current has left child
-			if(current.getLeft() != null) {
-				addNode(ta, current.getLeft());
-			}
-			//Case current has no left child. Added ta in left.
-			else {
-				current.setLeft(ta);
-				ta.setParent(current);
+	protected boolean addNode(BSTNode<K, T> tA) {
+		if(search(tA.getKey()) != null) {
+			return false;
+		}		
+		
+		if(root == null) {
+			root = tA;
+			return true;
+		}
+		
+		BSTNode<K, T> current = root;
+		boolean added = false;
+		
+		while(!added){
+			if(tA.getKey().compareTo(current.getKey())<0) {
+				if(current.getLeft() != null) {
+					current = current.getLeft();
+				}else {
+					current.setLeft(tA);
+					tA.setParent(current);
+					added = true;
+				}
+			}else {
+				if(current.getRight() != null){
+					current = current.getRight();
+				}else {
+					current.setRight(tA);
+					tA.setParent(current);
+					added = true;
+				}
 			}
 		}
-		//Right case:
-		else {
-			//Case current has right child
-			if(current.getRight() != null) {
-				addNode(ta, current.getRight());
-			}
-			//Case current has no right child, added ta in left.
-			else {
-				current.setRight(ta);
-				ta.setParent(current);
-			}
-		}
+		return added;
+		
 	}
 
 	/**
