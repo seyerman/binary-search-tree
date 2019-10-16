@@ -2,6 +2,9 @@ package ui;
 
 import binarySearchTree.BinarySearchTree;
 
+/**
+ * Simple main class to test different methods and functions of class Binary Search Tree
+ */
 public class MainBST {
 
 	public static void main(String[] args) {
@@ -17,7 +20,11 @@ public class MainBST {
 		
 		System.out.println(bst1);
 		
-		bst1.leftRotate(7);
+		bst1.rotateLeft(7);
+		
+		System.out.println(bst1);
+		
+		bst1.rotateRight(15);
 		
 		System.out.println(bst1);
 	}

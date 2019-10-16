@@ -1,6 +1,5 @@
 package avl;
 
-import binarySearchTree.BSTNode;
 import binarySearchTree.BinarySearchTree;
 
 public class AVLTree<K extends Comparable<K>,T> extends BinarySearchTree<K, T> {
@@ -20,11 +19,11 @@ public class AVLTree<K extends Comparable<K>,T> extends BinarySearchTree<K, T> {
 					if(P.getBalanceFactor()==1) { // ==> the temporary balance_factor(P) == 2 ==> rebalancing is required.
 						
 						if(N.getBalanceFactor()==-1) { // Left Right Case
-							leftRotate(N); // Reduce to Left Left Case
+							rotateLeft(N); // Reduce to Left Left Case
 						}
 						
 						// Left Left Case
-						rightRotate(P);
+						rotateRight(P);
 						balanced = true; // Leave the loop
 					}
 					
@@ -36,10 +35,10 @@ public class AVLTree<K extends Comparable<K>,T> extends BinarySearchTree<K, T> {
 				}else { // N == right_child(P), the child whose height increases by 1.
 					if(P.getBalanceFactor()==-1) { // ==> the temporary balance_factor(P) == -2 ==> rebalancing is required.
 						if(N.getBalanceFactor()==1) { // Right Left Case
-							rightRotate(N); // Reduce to Right Right Case
+							rotateRight(N); // Reduce to Right Right Case
 						}
 						// Right Right Case
-						leftRotate(P);
+						rotateLeft(P);
 						balanced = true; // Leave the loop
 					}
 					
