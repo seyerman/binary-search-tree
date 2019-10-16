@@ -2,6 +2,9 @@ package ui;
 
 import avl.AVLTree;
 
+/**
+ * Simple main class to test different methods and functions of class AVL
+ */
 public class MainAVL {
 
 	public static void main(String[] args) {

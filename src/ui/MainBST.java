@@ -2,6 +2,9 @@ package ui;
 
 import binarySearchTree.BinarySearchTree;
 
+/**
+ * Simple main class to test different methods and functions of class Binary Search Tree
+ */
 public class MainBST {
 
 	public static void main(String[] args) {
