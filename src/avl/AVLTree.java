@@ -3,6 +3,7 @@ package avl;
 import binarySearchTree.BinarySearchTree;
 
 public class AVLTree<K extends Comparable<K>,T> extends BinarySearchTree<K, T> {
+	@Override
 	public boolean add(K k, T t) {
 		AVLNode<K, T> N = new AVLNode<>(k,t);
 		
